@@ -1,21 +1,30 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>Total de Matrículas por Ano</h1>
-  <form method="get">
-      <label>
-          <select name="modalidade">
-              <option value="">Todas</option>
-              {% for item in ph.modalidades %}
-                  <option value="{{item}}">{{item}}</option>
-              {% endfor %}
-          </select>
-      </label>
-      <button type="submit"> Pesquisar</button>
-  </form>
-  <ul>
-    {% for ano, total in dados %}
-      <li>{{ ano }}: {{ total }}</li>
-    {% endfor %}
-  </ul>
+    <div class="container mt-2">
+        <div class="row border mt-4 p-3 justify-content-center">
+            <div class="col-4 align-self-center">
+                <h1>Total de Matrículas por Ano</h1>
+                <label>
+                    <form method="get" class="row g-3">
+                        <label>
+                            <select name="modalidade"  class="form-select">
+                                <option value="">Todos</option>
+                                {% for item in ph.modalidades %}
+                                    <option value="{{item}}">{{item}}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                    <button type="submit" class="btn btn-primary"> Pesquisar</button>
+                    </form>
+                </label>
+                <h3>Modalidade: {{ modalidade if modalidade else "Todos" }}</h3>
+                <ul>
+                    {% for ano, total in dados %}
+                        <li>{{ ano }}: {{ total }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}

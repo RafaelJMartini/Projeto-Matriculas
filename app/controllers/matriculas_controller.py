@@ -22,13 +22,15 @@ def index():
 @app.route('/matriculas_por_ano')
 def matriculas_por_ano():
     modalidade = request.args.get('modalidade')
-    dados = repo.total_matriculas_por_ano(modalidade)
-    return render_template("matriculasAno.html", dados=dados, ph=placeH)
+    dados_por_ano = repo.total_matriculas_por_ano(modalidade)
+    return render_template("matriculasAno.html", dados=dados_por_ano, ph=placeH, modalidade=modalidade)
 
-@app.route('/ranking_cursos/<ano>')
+@app.route('/ranking_cursos')
+def ranking_cursos_geral():
+    dados_por_curso = repo.total_matriculas_por_curso()
+    return render_template('rankingCursos.html', ph=placeH, dados=dados_por_curso,geral=1)
+
+@app.route('/ranking_cursos/<int:ano>')
 def ranking_cursos(ano):
-    if ano.isnumeric():
-        dados = repo.total_matriculas_por_curso(ano)
-        return render_template('rankingCursos.html', ano=ano, ph=placeH, dados=dados)
-    else:
-        return render_template('rankingCursos.html',ph=placeH)
+    dados_por_curso = repo.total_matriculas_por_curso(ano)
+    return render_template('rankingCursos.html', ph=placeH, dados=dados_por_curso, ano_pesquisa=ano)

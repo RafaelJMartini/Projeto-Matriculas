@@ -51,5 +51,8 @@ class MatriculaDAO:
         """.format("AND m.ano = :ano" if ano else "")
 
         with self.engine.connect() as conexao:
-            resultado = conexao.execute(text(query), {"ano": ano}).fetchall()
+            if ano:
+                resultado = conexao.execute(text(query), {"ano": ano}).fetchall()
+            else:
+                resultado = conexao.execute(text(query)).fetchall()
         return resultado

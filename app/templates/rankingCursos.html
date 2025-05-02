@@ -1,14 +1,47 @@
 {% extends 'base.html' %}
+
 {% block body %}
-      <h1>Ranking de Cursos</h1>
-      <label>
-        {% for ano in ph.anos %}
-        <a href="{{ url_for('ranking_cursos', ano=ano) }}">{{ ano }}</a>
-        {% endfor %}
-      </label>
-    <ul>
-        {% for nome_curso, total in dados %}
-          <li>{{ nome_curso }}: {{ total }}</li>
-        {% endfor %}
-    </ul>
+    <div class="container mt-2">
+        <div class="row border mt-4 p-3 justify-content-center">
+            <div class="col-4 align-self-center">
+                <h1>Ranking de Cursos</h1>
+
+                <label>
+                    <form method="get" class="row g-3" onsubmit="redirecionarPorAno(); return false;">
+                        <label>
+                            <select name="ano" id="anoSelect"  class="form-select">
+                                <option value="">Todos</option>
+                                {% for ano in ph.anos %}
+                                    <option value="{{ano}}">{{ano}}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <button type="submit" class="btn btn-primary"> Pesquisar</button>
+                    </form>
+
+                    <script>
+                        function redirecionarPorAno() {
+                            const ano = document.getElementById("anoSelect").value;
+                            let url = "/ranking_cursos";
+
+                            // Se tiver ano, adiciona no final
+                            if (ano) {
+                                url += `/${ano}`;
+                            }
+
+                            window.location.href = url;
+                        }
+                    </script>
+                </label>
+
+                <h3>Ano: {{ '{} - {}'.format(ph.anos[0],ph.anos[-1]) if geral else ano_pesquisa }}</h3>
+                <ul>
+                    {% for nome_curso, total in dados %}
+                        <li class="p-1">{{ nome_curso }}: {{ total }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
 {% endblock %}
+
