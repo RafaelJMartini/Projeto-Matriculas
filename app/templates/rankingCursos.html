@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+      <h1>Ranking de Cursos</h1>
+      <form method="get">
+          <label>
+              <select name="ano">
+
+
+
+                <option value="">Todas</option>
+                <option value="EaD">EaD</option>
+                <option value="Presencial">Presencial</option>
+              </select>
+          </label>
+          <button type="submit">Filtrar</button>
+      </form>
+{% endblock %}

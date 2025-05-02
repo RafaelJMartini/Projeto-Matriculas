@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>Total de Matrículas por Ano</h1>
+  <form method="get">
+      <label>
+          <select name="modalidade">
+              <option value="">Todas</option>
+              {% for item in ph.modalidades %}
+                  <option value="{{item}}">{{item}}</option>
+              {% endfor %}
+          </select>
+      </label>
+      <button type="submit"> Pesquisar</button>
+  </form>
+  <ul>
+    {% for ano, total in dados %}
+      <li>{{ ano }}: {{ total }}</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

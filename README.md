@@ -1,6 +1,12 @@
+Nomes: Douglas B. e Rafael M.
+
+Linguagem: Python
+
+Framework: Flask
+
 Arquitetura: MVC
 
-Persistência: Repository + DAO + PostgreSQL/MySQL
+Persistência: Repository + DAO + PostgreSQL
 
 Interface: Web (HTML + CSS com Jinja2 no Flask)
 

@@ -1,22 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head><title>Matriculados por Ano</title></head>
-<body>
-  <h1>Total de Matrículas por Ano</h1>
-  <form method="get">
-      <label>
-          <select name="modalidade">
-            <option value="">Todas</option>
-            <option value="EaD">EaD</option>
-            <option value="Presencial">Presencial</option>
-          </select>
-      </label>
-      <button type="submit">Filtrar</button>
-  </form>
-  <ul>
-    {% for ano, total in dados %}
-      <li>{{ ano }}: {{ total }}</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block body %}
+  <h1>Home page</h1>
+{% endblock %}

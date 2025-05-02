@@ -42,6 +42,13 @@ CREATE TABLE temp_faculdades (
     a2022 INT
 );
 
+CREATE TABLE consultas (
+    id SERIAL PRIMARY KEY,
+    descricao TEXT,
+    resultado TEXT,
+    data_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 COPY temp_faculdades FROM '/caminho/para/arquivo.csv' DELIMITER ';' CSV HEADER;
 
 INSERT INTO faculdades (
