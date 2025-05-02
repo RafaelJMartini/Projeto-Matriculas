@@ -1,3 +1,4 @@
-.idea
-.venv
+.idea/
+.venv/
+.idea/workspace.xml
 data/MatriculadosBrasil.csv
