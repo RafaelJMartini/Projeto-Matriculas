@@ -27,7 +27,8 @@ def matriculas_por_ano():
 
 @app.route('/ranking_cursos/<ano>')
 def ranking_cursos(ano):
-    if ano:
-        return render_template('rankingCursos.html', ano=ano)
+    if ano.isnumeric():
+        dados = repo.total_matriculas_por_curso(ano)
+        return render_template('rankingCursos.html', ano=ano, ph=placeH, dados=dados)
     else:
-        return render_template('rankingCursos.html')
+        return render_template('rankingCursos.html',ph=placeH)

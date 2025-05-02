@@ -9,3 +9,6 @@ class MatriculaRepository:
 
     def total_matriculas_por_ano(self, modalidade=None):
         return self.dao.get_matriculas_por_ano(modalidade)
+
+    def total_matriculas_por_curso(self,ano):
+        return self.dao.get_matriculas_por_curso(ano)

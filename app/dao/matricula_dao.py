@@ -37,3 +37,19 @@ class MatriculaDAO:
                 resultado = conexao.execute(text(query)).fetchall()
 
         return resultado
+
+    def get_matriculas_por_curso(self, ano=None):
+        query = """
+        SELECT f.nome_curso, SUM(m.numero_matriculados)
+        FROM matriculas m
+        JOIN faculdades f ON f.id = m.faculdade_id
+        WHERE m.numero_matriculados IS NOT NULL
+        {}
+        GROUP BY f.nome_curso
+        ORDER BY SUM(m.numero_matriculados) DESC
+        LIMIT 10;
+        """.format("AND m.ano = :ano" if ano else "")
+
+        with self.engine.connect() as conexao:
+            resultado = conexao.execute(text(query), {"ano": ano}).fetchall()
+        return resultado
