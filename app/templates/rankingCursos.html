@@ -7,12 +7,20 @@
                 <h1>Ranking de Cursos</h1>
 
                 <label>
-                    <form method="get" class="row g-3" onsubmit="redirecionarPorAno(); return false;">
-                        <label>
+                    <form method="get" class="row g-3" onsubmit="redirecionarPorAnoEstado(); return false;">
+                        <label> Ano
                             <select name="ano" id="anoSelect"  class="form-select">
                                 <option value="">Todos</option>
-                                {% for ano in ph.anos %}
-                                    <option value="{{ano}}">{{ano}}</option>
+                                {% for item in ph.anos %}
+                                    <option value="{{ item }}" {% if ano|string == item|string %}selected{% endif %}>{{ item }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label> Estado
+                            <select name="estado" id="estadoSelect"  class="form-select">
+                                <option value="">Todos</option>
+                                {% for item in ph.estados %}
+                                    <option value="{{ item }}" {% if estado == item %}selected{% endif %}>{{ item }}</option>
                                 {% endfor %}
                             </select>
                         </label>
@@ -20,13 +28,24 @@
                     </form>
 
                     <script>
-                        function redirecionarPorAno() {
+                        function redirecionarPorAnoEstado() {
                             const ano = document.getElementById("anoSelect").value;
+                            const estado = document.getElementById("estadoSelect").value;
                             let url = "/ranking_cursos";
 
-                            // Se tiver ano, adiciona no final
+                            // Se tiver estado, adiciona no final
+                            if (estado) {
+                                url += `/${estado}`;
+                            }
+                            else{
+                                url += '/all'
+                            }
+                            
                             if (ano) {
                                 url += `/${ano}`;
+                            }
+                            else{
+                                url += '/all'
                             }
 
                             window.location.href = url;
@@ -34,12 +53,13 @@
                     </script>
                 </label>
 
-                <h3>Ano: {{ '{} - {}'.format(ph.anos[0],ph.anos[-1]) if geral else ano_pesquisa }}</h3>
-                <ul>
-                    {% for nome_curso, total in dados %}
-                        <li class="p-1">{{ nome_curso }}: {{ total }}</li>
-                    {% endfor %}
-                </ul>
+                <!---<h3>Ano: {{ '{} - {}'.format(ph.anos[0],ph.anos[-1]) if geral else ano_pesquisa }}</h3> --->
+                {% for nome_curso, total in dados %}
+                        <ul class="list-group list-group-horizontal">
+                            <li class="list-group-item flex-fill">{{ nome_curso }}</li>
+                            <li class="list-group-item flex-fill">{{ total }}</li>
+                        </ul>
+                {% endfor %}
             </div>
         </div>
     </div>

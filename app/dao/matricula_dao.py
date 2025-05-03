@@ -5,54 +5,86 @@ class MatriculaDAO:
         self.engine = engine
 
     def get_place_holders(self):
-        query = """
+        query1 = """
         SELECT DISTINCT ano
         FROM matriculas
         """
 
-        query1 = """
+        query2 = """
         SELECT DISTINCT modalidade
         FROM faculdades
         """
+
+        query3 = """
+        SELECT DISTINCT estado
+        FROM faculdades
+        """
+
         with self.engine.connect() as conexao:
-            resultado1 = conexao.execute(text(query)).fetchall()
-            resultado2 = conexao.execute(text(query1)).fetchall()
+            resultado1 = conexao.execute(text(query1)).fetchall()
+            resultado2 = conexao.execute(text(query2)).fetchall()
+            resultado3 = conexao.execute(text(query3)).fetchall()
 
-        return resultado1,resultado2
 
-    def get_matriculas_por_ano(self, modalidade=None):
-        query = """
+        return resultado1, resultado2, resultado3
+
+    def get_matriculas_por_ano(self, modalidade=None, estado=None):
+        filtros = []
+        params = {}
+
+        if modalidade:
+            filtros.append("AND f.modalidade = :modalidade")
+            params["modalidade"] = modalidade
+
+        if estado:
+            filtros.append("AND f.estado = :estado")
+            params["estado"] = estado
+
+        filtro_sql = "\n        ".join(filtros)
+
+        query = f"""
         SELECT m.ano, SUM(m.numero_matriculados)
         FROM matriculas m
         JOIN faculdades f ON f.id = m.faculdade_id
-        {}
+        WHERE m.ano IS NOT NULL
+            {filtro_sql}
         GROUP BY ano
         ORDER BY ano;
-        """.format("WHERE f.modalidade = :modalidade" if modalidade else "")
+        """
 
         with self.engine.connect() as conexao:
-            if modalidade:
-                resultado = conexao.execute(text(query), {"modalidade": modalidade}).fetchall()
-            else:
-                resultado = conexao.execute(text(query)).fetchall()
+            resultado = conexao.execute(text(query), params).fetchall()
 
         return resultado
 
-    def get_matriculas_por_curso(self, ano=None):
-        query = """
+    def get_matriculas_por_curso(self,estado=None,ano=None):
+        filtros = []
+        params = {}
+
+        if estado:
+            filtros.append("AND f.estado = :estado")
+            params["estado"] = estado
+
+        if ano:
+            filtros.append("AND m.ano = :ano")
+            params["ano"] = ano
+
+        print("DEBUG estado:", estado)
+        print("DEBUG ano:", ano)
+
+        filtro_sql = "\n        ".join(filtros)
+        query = f"""
         SELECT f.nome_curso, SUM(m.numero_matriculados)
         FROM matriculas m
         JOIN faculdades f ON f.id = m.faculdade_id
         WHERE m.numero_matriculados IS NOT NULL
-        {}
+        {filtro_sql}
         GROUP BY f.nome_curso
         ORDER BY SUM(m.numero_matriculados) DESC
         LIMIT 10;
-        """.format("AND m.ano = :ano" if ano else "")
+        """
 
         with self.engine.connect() as conexao:
-            if ano:
-                resultado = conexao.execute(text(query), {"ano": ano}).fetchall()
-            else:
-                resultado = conexao.execute(text(query)).fetchall()
+            resultado = conexao.execute(text(query), params).fetchall()
+
         return resultado

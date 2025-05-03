@@ -6,24 +6,65 @@
             <div class="col-4 align-self-center">
                 <h1>Total de Matrículas por Ano</h1>
                 <label>
-                    <form method="get" class="row g-3">
-                        <label>
-                            <select name="modalidade"  class="form-select">
+                    <form method="get" class="row g-3" onsubmit="redirecionarPorEstadoMod(); return false;">
+                        <label> Modalidade
+                            <select name="modalidade" id="modSelect"  class="form-select">
                                 <option value="">Todos</option>
                                 {% for item in ph.modalidades %}
-                                    <option value="{{item}}">{{item}}</option>
+                                    <option value="{{ item }}" {% if modalidade == item %}selected{% endif %}>{{ item }}</option>
+                                {% endfor %}
+                            </select>
+                        </label>
+                        <label> Estado
+                            <select name="estado" id="estadoSelect"  class="form-select">
+                                <option value="">Todos</option>
+                                {% for item in ph.estados %}
+                                    <option value="{{ item }}" {% if estado == item %}selected{% endif %}>{{ item }}</option>
                                 {% endfor %}
                             </select>
                         </label>
                     <button type="submit" class="btn btn-primary"> Pesquisar</button>
                     </form>
+
+                    <script>
+                        function redirecionarPorEstadoMod() {
+                            const mod = document.getElementById("modSelect").value;
+                            const estado = document.getElementById("estadoSelect").value;
+                            let url = "/matriculas_por_ano";
+
+                            // Se tiver estado, adiciona no final
+                            if (estado) {
+                                url += `/${estado}`;
+                            }
+                            else{
+                                url += '/all'
+                            }
+
+                            if (mod) {
+                                url += `/${mod}`;
+                            }
+                            else{
+                                url += '/all'
+                            }
+
+                            window.location.href = url;
+                        }
+                    </script>
+
+
                 </label>
-                <h3>Modalidade: {{ modalidade if modalidade else "Todos" }}</h3>
-                <ul>
-                    {% for ano, total in dados %}
-                        <li>{{ ano }}: {{ total }}</li>
-                    {% endfor %}
-                </ul>
+                {% if dados %}
+                    <p>Modalidade: {{ modalidade if modalidade else "Todos" }}</p>
+                    <p>Estado: {{ estado if estado else "Todos" }}</p>
+                {% endif %}
+
+                {% for ano, total in dados %}
+                    <ul class="list-group list-group-horizontal">
+                      <li class="list-group-item">{{ ano }}</li>
+                      <li class="list-group-item flex-fill">{{ total }}</li>
+                    </ul>
+                {% endfor %}
+
             </div>
         </div>
     </div>

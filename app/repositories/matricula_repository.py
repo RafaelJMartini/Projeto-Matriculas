@@ -7,8 +7,8 @@ class MatriculaRepository:
     def place_holders(self):
         return self.dao.get_place_holders()
 
-    def total_matriculas_por_ano(self, modalidade=None):
-        return self.dao.get_matriculas_por_ano(modalidade)
+    def total_matriculas_por_ano(self, modalidade=None, estado=None):
+        return self.dao.get_matriculas_por_ano(modalidade, estado)
 
-    def total_matriculas_por_curso(self,ano=None):
-        return self.dao.get_matriculas_por_curso(ano)
+    def total_matriculas_por_curso(self, estado=None,ano=None):
+        return self.dao.get_matriculas_por_curso(estado,ano)
