@@ -1,15 +1,38 @@
+# Sistema matrículas
+
 Nomes: Douglas B. e Rafael M.
 
-Linguagem: Python
+**Linguagem:** Python<br/>
+**Framework:**  Flask<br/>
+**Arquitetura:**  MVC (Model View Controller)<br/>
+**Persistência:**  Repository + DAO + PostgreSQL<br/>
+**Interface:**  Web (HTML + CSS com Jinja2 no Flask)<br/>
+**Fonte de dados:** Matriculados Brasil - Projeto.csv
 
-Framework: Flask
+Objetivo: Fazer análises agregadas por curso, ano, estado e modalidade, com armazenamento de consultas recentes.
 
-Arquitetura: MVC
+---
 
-Persistência: Repository + DAO + PostgreSQL
+## Execução do projeto:
 
-Interface: Web (HTML + CSS com Jinja2 no Flask)
+1. Crie um ambiente e instale todos os requisitos do arquivo "*requirements.txt*".
 
-Fonte de dados: Matriculados Brasil - Projeto.csv
+2. Crie um arquivo .env no diretório raíz, com os seguintes conteúdos:
 
-Objetivo: fazer análises agregadas por curso, ano, estado e modalidade, com armazenamento de consultas recentes.
+    ```
+    USER = 'postgres'
+    PORT = '5432'
+    ENROLL_TABLE = 'matriculas'
+    PW = 'ucs'
+    HOST = 'localhost'
+    ```
+
+3. Com PostgreSQL instalado, rode o arquivo "create.sql" da pasta "data" no pgAdmin.
+
+    (Na linha 52, mude o caminho para encontrar o CSV.)
+    <br/><br/>
+    Assim deve ficar:
+
+    <img src="docs/postgresql_overview.png"/>
+
+4. Execute o arquivo run.py 

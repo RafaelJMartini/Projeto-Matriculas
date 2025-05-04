@@ -44,8 +44,8 @@ CREATE TABLE temp_faculdades (
 
 CREATE TABLE consultas (
     id SERIAL PRIMARY KEY,
-    descricao TEXT,
-    resultado TEXT,
+    consulta TEXT,
+    resultado JSON,
     data_consulta TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

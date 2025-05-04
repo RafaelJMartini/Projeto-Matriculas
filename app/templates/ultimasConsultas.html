@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Consulta</th>
+                <th scope="col">Resultado</th>
+                <th scope="col">Data</th>
+                <th scope="col">Link</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consulta in consultas %}
+            <tr>
+                <td>{{ consulta.consulta }}</td>
+                <td>{{ consulta.resultado }}</td>
+                <td>{{ consulta.data_consulta }}</td>
+                <td><a href="{{ request.host_url.rstrip('/') }}{{ consulta.consulta }}">Aqui</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

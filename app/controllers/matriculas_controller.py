@@ -9,7 +9,7 @@ import os
 
 # Conexão com banco
 load_dotenv()
-engine = create_engine(f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PW')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('SCHEMA')}")
+engine = create_engine(f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PW')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('ENROLL_TABLE')}")
 dao = MatriculaDAO(engine)
 repo = MatriculaRepository(dao)
 
@@ -39,4 +39,11 @@ def ranking_cursos(estado,ano):
     estado = None if estado == 'all' else estado
     ano = None if ano == 'all' else ano
     dados_por_curso = repo.total_matriculas_por_curso(estado,ano)
+    repo.add_consulta(consulta=f"/ranking_cursos/{estado or 'all'}/{ano or 'all'}", resultado=dados_por_curso)
     return render_template('rankingCursos.html', ph=placeH, dados=dados_por_curso, ano=ano, estado = estado)
+
+@app.route('/ultimas_consultas')
+def ultimas_consultas():
+    consultas = repo.get_consultas(numero=2)
+    print(consultas)
+    return render_template("ultimasConsultas.html", consultas=consultas)

@@ -1,3 +1,7 @@
+import base64
+import json
+import urllib.parse
+from datetime import datetime
 from sqlalchemy import text
 
 class MatriculaDAO:
@@ -87,4 +91,28 @@ class MatriculaDAO:
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
 
+        return resultado
+
+    def add_consulta(self, consulta, resultado):
+        teste = dict(resultado)
+        teste = json.dumps(teste)
+
+        query = "INSERT INTO consultas (consulta, resultado, data_consulta) "
+        query += f"VALUES ('{consulta}', '{teste}', '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}');"
+        print(query)
+        with self.engine.connect() as conexao:
+            transaction = conexao.begin()
+            result = conexao.execute(text(query))
+            conexao.commit()
+        print(result.rowcount)
+
+        return None
+
+    def get_consulta(self, numero=2):
+        query = f"""
+        SELECT * FROM consultas
+        ORDER BY id DESC
+        """
+        with self.engine.connect() as conexao:
+            resultado = conexao.execute(text(query)).fetchall()
         return resultado
