@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="height: 40px;">
   <div class="container-fluid container">
     <a class="navbar-brand" href="{{url_for('index')}}">
         <img src="{{ url_for('static', filename='favicon.png') }}" alt="Ícone" width="30" height="30">
@@ -9,9 +9,11 @@
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('matriculas_por_ano')}}">Total de alunos matriculados</a>
         </li>
+          <span class="vr mx-1"></span>
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('ranking_cursos_geral')}}">Ranking cursos</a>
         </li>
+          <span class="vr mx-1"></span>
         <li class="nav-item">
           <a class="nav-link" href="{{url_for('faculdades_por_matricula_geral')}}">Matriculas por faculdade</a>
         </li>

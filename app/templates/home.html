@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block body %}
-  <h1>Dados Matrículas</h1>
-    <img src="{{ url_for('static', filename='favicon.png') }}" alt="Ícone" width="300" height="300">
+    <div class="d-flex flex-column justify-content-center align-items-center mt-5">
+            <h1>Matriculados Brasil</h1>
+            <img src="{{ url_for('static', filename='favicon.png') }}" alt="Ícone" width="300" height="300">
 
-    <footer>Feito por: Douglas B. e Rafael M.</footer>
+            <footer>Feito por: Douglas B. e Rafael M.</footer>
+    </div>
 {% endblock %}

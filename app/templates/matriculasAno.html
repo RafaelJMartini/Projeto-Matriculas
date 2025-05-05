@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
-{% include 'tabela.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='tabela.css') }}">
+{% endblock %}
 
 {% block body %}
+
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-6 mt-4 rounded bg-white shadow-sm">
