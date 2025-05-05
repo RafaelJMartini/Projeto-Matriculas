@@ -4,8 +4,8 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-6 p-4 rounded bg-white shadow-sm">
-                <h1>Ranking de Cursos</h1>
+            <div class="col-6 mt-4 rounded bg-white shadow-sm">
+                <h1>Matriculas por faculdade</h1>
 
                 <label>
                     <form method="get" class="row g-3 align-items-end justify-content-center" onsubmit="redirecionarPorAnoEstado(); return false;">
@@ -39,9 +39,8 @@
                         function redirecionarPorAnoEstado() {
                             const ano = document.getElementById("anoSelect").value;
                             const estado = document.getElementById("estadoSelect").value;
-                            let url = "/ranking_cursos";
+                            let url = "/faculdades_por_matricula";
 
-                            // Se tiver estado, adiciona no final
                             url += estado ? `/${estado}` : '/all';
                             url += ano ? `/${ano}` : '/all';
 
@@ -49,23 +48,25 @@
                         }
                     </script>
                 </label>
+            </div>
 
+            <div class="col-10 rounded bg-white shadow-sm">
                 <table class="mt-3">
                     {% if dados %}
                     <tr>
-                        <th>Curso</th>
+                        <th>Faculdade</th>
                         <th>Matriculados</th>
                     </tr>
                     {% endif %}
-                    {% for  nome_curso, total in dados %}
+                    {% for  nome_facul, total in dados %}
                     <tr>
-                        <td>{{ nome_curso }}</td>
+                        <td>{{ nome_facul }}</td>
                         <td>{{ total }}</td>
                     </tr>
                     {% endfor %}
                 </table>
             </div>
+
         </div>
     </div>
 {% endblock %}
-

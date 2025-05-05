@@ -73,9 +73,6 @@ class MatriculaDAO:
             filtros.append("AND m.ano = :ano")
             params["ano"] = ano
 
-        print("DEBUG estado:", estado)
-        print("DEBUG ano:", ano)
-
         filtro_sql = "\n        ".join(filtros)
         query = f"""
         SELECT f.nome_curso, SUM(m.numero_matriculados)
@@ -87,6 +84,35 @@ class MatriculaDAO:
         ORDER BY SUM(m.numero_matriculados) DESC
         LIMIT 10;
         """
+
+        with self.engine.connect() as conexao:
+            resultado = conexao.execute(text(query), params).fetchall()
+
+        return resultado
+
+    def get_matriculas_por_faculdade(self, estado=None, ano=None):
+        filtros = []
+        params = {}
+
+        if estado:
+            filtros.append("AND f.estado = :estado")
+            params["estado"] = estado
+
+        if ano:
+            filtros.append("AND m.ano = :ano")
+            params["ano"] = ano
+
+        filtro_sql = "\n        ".join(filtros)
+        query = f"""
+                SELECT f.ies, SUM(m.numero_matriculados) AS total_matriculados
+                FROM matriculas m
+                JOIN faculdades f ON f.id = m.faculdade_id
+                WHERE m.numero_matriculados IS NOT NULL
+                {filtro_sql}
+                GROUP BY f.ies
+                ORDER BY total_matriculados DESC
+                LIMIT 10;
+                """
 
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
