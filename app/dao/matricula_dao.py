@@ -1,6 +1,8 @@
 import base64
 import json
 import urllib.parse
+
+from app.models.matricula_model import *
 from datetime import datetime
 from sqlalchemy import text
 
@@ -59,7 +61,11 @@ class MatriculaDAO:
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
 
-        return resultado
+        matriculas_ano = list()
+        for item in resultado:
+            matriculas_ano.append(RegistroAno(item[0], item[1]))
+
+        return matriculas_ano
 
     def get_matriculas_por_curso(self,estado=None,ano=None):
         filtros = []
@@ -84,11 +90,14 @@ class MatriculaDAO:
         ORDER BY SUM(m.numero_matriculados) DESC
         LIMIT 10;
         """
-
+        matriculas_curso = list()
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
 
-        return resultado
+        for item in resultado:
+            matriculas_curso.append(Matricula(nome_curso=item[0], matriculados=item[1], estado=estado, ano=ano, modalidade=None))
+
+        return matriculas_curso
 
     def get_matriculas_por_faculdade(self, estado=None, ano=None):
         filtros = []
@@ -114,14 +123,17 @@ class MatriculaDAO:
                 LIMIT 10;
                 """
 
+        matriculas_por_faculdade = list()
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
 
-        return resultado
+        for item in resultado:
+            matriculas_por_faculdade.append(RegistroFaculdade(item[0], item[1]))
+
+        return matriculas_por_faculdade
 
     def add_consulta(self, consulta, resultado):
-        teste = dict(resultado)
-        teste = json.dumps(teste)
+        teste = json.dumps(resultado, default=vars)
 
         query = "INSERT INTO consultas (consulta, resultado, data_consulta) "
         query += f"VALUES ('{consulta}', '{teste}', '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}');"

@@ -53,20 +53,20 @@
                     </script>
                 </label>
 
+                {% if dados %}
                 <table class="mt-3">
-                    {% if dados %}
                     <tr>
                         <th>Curso</th>
                         <th>Matriculados</th>
                     </tr>
-                    {% endif %}
-                    {% for  nome_curso, total in dados %}
+                    {% for registroRanking in dados %}
                     <tr>
-                        <td>{{ nome_curso }}</td>
-                        <td>{{ total }}</td>
+                        <td>{{ registroRanking.nome_curso }}</td>
+                        <td>{{ registroRanking.matriculados }}</td>
                     </tr>
                     {% endfor %}
                 </table>
+                {% endif %}
             </div>
         </div>
     </div>

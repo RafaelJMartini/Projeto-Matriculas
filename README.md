@@ -27,9 +27,10 @@ Objetivo: Fazer análises agregadas por curso, ano, estado e modalidade, com arm
     HOST = 'localhost'
     ```
 
-3. Com PostgreSQL instalado, rode o arquivo "create.sql" da pasta "data" no pgAdmin.
+3. Com PostgreSQL instalado, crie um banco de dados "matriculas" e rode o arquivo "create.sql" da pasta "data" no pgAdmin.
 
-    (Na linha 52, mude o caminho para encontrar o CSV.)
+    (Na linha 52, mude o caminho para encontrar o CSV.)<br/>
+    (Se o postgresql não tiver permissão, pôr em um diretório no C:\ e rodar a partir de lá.)
     <br/><br/>
     Assim deve ficar:
 
