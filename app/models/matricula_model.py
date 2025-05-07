@@ -14,7 +14,8 @@ class Matricula:
         self.matriculados = matriculados
 
 class PlaceHolders:
-    def __init__(self, anos,modalidades,estados):
+    def __init__(self, lista):
+        anos, modalidades, estados = lista
         modalidades = [m[0] for m in modalidades]
         anos = [a[0] for a in anos]
         estados = [e[0] for e in estados]

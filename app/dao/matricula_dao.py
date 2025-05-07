@@ -1,13 +1,17 @@
 import base64
 import json
 import urllib.parse
-
-from app.models.matricula_model import *
+from app.models.matricula_model import RegistroAno, Matricula, RegistroFaculdade
 from datetime import datetime
 from sqlalchemy import text
+from dotenv import load_dotenv
+from sqlalchemy import create_engine
+import os
 
 class MatriculaDAO:
-    def __init__(self, engine):
+    def __init__(self, ):
+        load_dotenv()
+        engine = create_engine(f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PW')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('ENROLL_TABLE')}")
         self.engine = engine
 
     def get_place_holders(self):
@@ -61,7 +65,7 @@ class MatriculaDAO:
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query), params).fetchall()
 
-        matriculas_ano = list()
+        matriculas_ano = []
         for item in resultado:
             matriculas_ano.append(RegistroAno(item[0], item[1]))
 
@@ -133,10 +137,10 @@ class MatriculaDAO:
         return matriculas_por_faculdade
 
     def add_consulta(self, consulta, resultado):
-        teste = json.dumps(resultado, default=vars)
+        resultado = json.dumps(resultado, default=vars)
 
         query = "INSERT INTO consultas (consulta, resultado, data_consulta) "
-        query += f"VALUES ('{consulta}', '{teste}', '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}');"
+        query += f"VALUES ('{consulta}', '{resultado}', '{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}');"
         print(query)
         with self.engine.connect() as conexao:
             transaction = conexao.begin()
@@ -146,11 +150,12 @@ class MatriculaDAO:
 
         return None
 
-    def get_consulta(self, numero=2):
+    def get_consulta(self):
         query = f"""
         SELECT * FROM consultas
         ORDER BY id DESC
         """
         with self.engine.connect() as conexao:
             resultado = conexao.execute(text(query)).fetchall()
+
         return resultado

@@ -1,20 +1,13 @@
 from app import app
-from flask import render_template, request
+from flask import render_template
 from app.repositories.matricula_repository import MatriculaRepository
 from app.dao.matricula_dao import MatriculaDAO
 from app.models.matricula_model import PlaceHolders
-from sqlalchemy import create_engine
-from dotenv import load_dotenv
-import os
 
-# Conexão com banco
-load_dotenv()
-engine = create_engine(f"postgresql+psycopg2://{os.getenv('USER')}:{os.getenv('PW')}@{os.getenv('HOST')}:{os.getenv('PORT')}/{os.getenv('ENROLL_TABLE')}")
-dao = MatriculaDAO(engine)
+dao = MatriculaDAO()
 repo = MatriculaRepository(dao)
+placeH = PlaceHolders(repo.place_holders())
 
-anos, modalidades, estados = repo.place_holders()
-placeH = PlaceHolders(anos, modalidades, estados)
 @app.route('/')
 def index():
     return render_template("home.html")
@@ -52,12 +45,11 @@ def faculdades_por_matricula(estado,ano):
     estado = None if estado == 'all' else estado
     ano = None if ano == 'all' else ano
     dados = repo.total_matriculas_por_faculdade(estado,ano)
-    #repo.add_consulta(consulta=f"/faculdades_por_matricula/{estado or 'all'}/{ano or 'all'}", resultado=dados)
+    repo.add_consulta(consulta=f"/faculdades_por_matricula/{estado or 'all'}/{ano or 'all'}", resultado=dados)
     return render_template('faculdadesMatricula.html', ph=placeH, ano=ano, estado=estado, dados=dados)
 
 @app.route('/ultimas_consultas')
 def ultimas_consultas():
-    consultas = repo.get_consultas(numero=2)
-    print(consultas)
+    consultas = repo.get_consultas()
     return render_template("ultimasConsultas.html", consultas=consultas)
 

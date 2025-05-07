@@ -16,8 +16,8 @@ class MatriculaRepository:
     def total_matriculas_por_faculdade(self, estado=None, ano=None):
         return self.dao.get_matriculas_por_faculdade(estado,ano)
 
-    def get_consultas(self, numero=2):
-        return self.dao.get_consulta(numero)
+    def get_consultas(self):
+        return self.dao.get_consulta()
 
     def add_consulta(self, consulta, resultado):
         return self.dao.add_consulta(consulta, resultado)
