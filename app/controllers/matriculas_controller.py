@@ -41,7 +41,7 @@ def ranking_cursos(estado,ano):
     ano = None if ano == 'all' else ano
     dados_por_curso = repo.total_matriculas_por_curso(estado,ano)
     repo.add_consulta(consulta=f"/ranking_cursos/{estado or 'all'}/{ano or 'all'}", resultado=dados_por_curso)
-    return render_template('rankingCursos.html', ph=placeH, dados=dados_por_curso, ano=ano, estado = estado)
+    return render_template('rankingCursos.html', ph=placeH, dados=dados_por_curso, ano=ano, estado=estado)
 
 @app.route('/faculdades_por_matricula')
 def faculdades_por_matricula_geral():
@@ -52,7 +52,7 @@ def faculdades_por_matricula(estado,ano):
     estado = None if estado == 'all' else estado
     ano = None if ano == 'all' else ano
     dados = repo.total_matriculas_por_faculdade(estado,ano)
-    repo.add_consulta(consulta=f"/faculdades_por_matricula/{estado or 'all'}/{ano or 'all'}", resultado=dados)
+    #repo.add_consulta(consulta=f"/faculdades_por_matricula/{estado or 'all'}/{ano or 'all'}", resultado=dados)
     return render_template('faculdadesMatricula.html', ph=placeH, ano=ano, estado=estado, dados=dados)
 
 @app.route('/ultimas_consultas')

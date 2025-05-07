@@ -15,7 +15,7 @@
             {% for consulta in consultas %}
             <tr>
                 <td>{{ consulta.consulta }}</td>
-                <td>{{ consulta.resultado }}</td>
+                <td><nav class="jsonHidden" style="visibility: collapse; height: 0;">{{ consulta.resultado }}</nav></td>
                 <td>{{ consulta.data_consulta }}</td>
                 <td><a href="{{ request.host_url.rstrip('/') }}{{ consulta.consulta }}">Aqui</a></td>
             </tr>
@@ -23,4 +23,6 @@
         </tbody>
     </table>
 </div>
+
+<script type="text/javascript" src="{{ url_for('static', filename='tabela.js') }}"></script>
 {% endblock %}

@@ -8,7 +8,7 @@
 
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-6 mt-4 rounded bg-white shadow-sm">
+            <div class="col-6 p-4 rounded bg-white shadow-sm">
                 <h1>Total de Matrículas por Ano</h1>
                 <label class="mt-1">
                     <form method="get" class="row g-3 align-items-end justify-content-center" onsubmit="redirecionarPorEstadoMod(); return false;">
@@ -35,7 +35,6 @@
                         <div class="col-md-1">
                         <button type="submit" class="btn btn-primary  w-200"> Pesquisar</button>
                         </div>
-
                     </form>
 
                     <script>
@@ -55,25 +54,26 @@
                 </label>
             </div>
         </div>
-            <div class="row justify-content-center">
-                <div class="col-4 rounded bg-white shadow-sm">
-                    <table class="mt-3">
-                        {% if dados %}
-                        <tr>
-                            <th>Ano</th>
-                            <th>Matriculados</th>
-                        </tr>
-                        {% endif %}
-                        {% for  ano, total in dados %}
-                        <tr>
-                            <td>{{ ano }}</td>
-                            <td>{{ total }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
+        <br/><br/>
+        {% if dados %}
+        <div class="row justify-content-center">
+            <div class="col-4 rounded bg-white shadow-sm">
+                <table class="mt-3">
+                    <tr>
+                        <th>Ano</th>
+                        <th>Matriculados</th>
+                    </tr>
+                    {% for registroAno in dados %}
+                    <tr>
+                        <td>{{ registroAno.ano }}</td>
+                        <td>{{ registroAno.num_matriculados }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
 
-                </div>
             </div>
+        </div>
+        {% endif %}
         </div>
     </div>
 {% endblock %}

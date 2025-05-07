@@ -1,10 +1,16 @@
+class RegistroAno:
+    def __init__(self, ano, num_matriculados):
+        self.ano = ano
+        self.num_matriculados = num_matriculados
+
+class RegistroFaculdade:
+    def __init__(self, faculdade, matriculados):
+        self.faculdade = faculdade
+        self.matriculados = matriculados
 
 class Matricula:
     def __init__(self, estado, modalidade, nome_curso, ano, matriculados):
-        self.estado = estado
-        self.modalidade = modalidade
         self.nome_curso = nome_curso
-        self.ano = ano
         self.matriculados = matriculados
 
 class PlaceHolders:
