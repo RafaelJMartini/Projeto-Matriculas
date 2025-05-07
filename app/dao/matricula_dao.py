@@ -99,7 +99,7 @@ class MatriculaDAO:
             resultado = conexao.execute(text(query), params).fetchall()
 
         for item in resultado:
-            matriculas_curso.append(Matricula(nome_curso=item[0], matriculados=item[1], estado=estado, ano=ano, modalidade=None))
+            matriculas_curso.append(Matricula(nome_curso=item[0], matriculados=item[1]))
 
         return matriculas_curso
 

@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='tabela.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="container mt-5">
     <table class="table table-striped">
@@ -12,10 +16,38 @@
             </tr>
         </thead>
         <tbody>
+            {% if consulta %}
+                <p>{{ consulta }}</p>
+            {% endif %}
             {% for consulta in consultas %}
             <tr>
                 <td>{{ consulta.consulta }}</td>
-                <td><nav class="jsonHidden" style="visibility: collapse; height: 0;">{{ consulta.resultado }}</nav></td>
+                <td>
+                          <table class="table-sm">
+                            <thead>
+                              <tr>
+                                <th>Curso</th>
+                                <th>Matriculados</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {% for item in consulta.resultado %}
+                                <tr>
+                                {% if item.nome_curso %}
+                                    <td>{{ item.nome_curso }}</td>
+                                {% endif %}
+                                {% if item.ano %}
+                                    <td>{{ item.ano }}</td>
+                                {% endif %}
+                                {% if item.faculdade %}
+                                    <td>{{ item.faculdade }}</td>
+                                {% endif %}
+                                  <td>{{ item.matriculados }}</td>
+                                </tr>
+                              {% endfor %}
+                            </tbody>
+                          </table>
+                </td>
                 <td>{{ consulta.data_consulta }}</td>
                 <td><a href="{{ request.host_url.rstrip('/') }}{{ consulta.consulta }}">Aqui</a></td>
             </tr>
@@ -24,5 +56,5 @@
     </table>
 </div>
 
-<script type="text/javascript" src="{{ url_for('static', filename='tabela.js') }}"></script>
+
 {% endblock %}

@@ -3,6 +3,7 @@ from flask import render_template
 from app.repositories.matricula_repository import MatriculaRepository
 from app.dao.matricula_dao import MatriculaDAO
 from app.models.matricula_model import PlaceHolders
+import json
 
 dao = MatriculaDAO()
 repo = MatriculaRepository(dao)
@@ -50,6 +51,16 @@ def faculdades_por_matricula(estado,ano):
 
 @app.route('/ultimas_consultas')
 def ultimas_consultas():
-    consultas = repo.get_consultas()
+    dados = repo.get_consultas()
+    consultas = []
+    for linha in dados:
+        consulta_dict = dict(linha._mapping)
+        try:
+            if isinstance(consulta_dict["resultado"], str):
+                consulta_dict["resultado"] = json.loads(consulta_dict["resultado"])
+        except Exception:
+            consulta_dict["resultado"] = []
+        consultas.append(consulta_dict)
+
     return render_template("ultimasConsultas.html", consultas=consultas)
 

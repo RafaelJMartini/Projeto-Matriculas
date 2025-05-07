@@ -1,7 +1,7 @@
 class RegistroAno:
-    def __init__(self, ano, num_matriculados):
+    def __init__(self, ano, matriculados):
         self.ano = ano
-        self.num_matriculados = num_matriculados
+        self.matriculados = matriculados
 
 class RegistroFaculdade:
     def __init__(self, faculdade, matriculados):
@@ -9,7 +9,7 @@ class RegistroFaculdade:
         self.matriculados = matriculados
 
 class Matricula:
-    def __init__(self, estado, modalidade, nome_curso, ano, matriculados):
+    def __init__(self, nome_curso, matriculados):
         self.nome_curso = nome_curso
         self.matriculados = matriculados
 
