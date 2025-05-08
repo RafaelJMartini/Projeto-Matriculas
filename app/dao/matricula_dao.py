@@ -1,6 +1,4 @@
-import base64
 import json
-import urllib.parse
 from app.models.matricula_model import RegistroAno, Matricula, RegistroFaculdade
 from datetime import datetime
 from sqlalchemy import text

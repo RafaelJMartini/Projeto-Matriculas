@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect
 from app.repositories.matricula_repository import MatriculaRepository
 from app.dao.matricula_dao import MatriculaDAO
 from app.models.matricula_model import PlaceHolders
