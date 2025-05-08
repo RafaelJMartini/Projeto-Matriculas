@@ -13,9 +13,6 @@ class Matricula:
         self.nome_curso = nome_curso
         self.matriculados = matriculados
 
-class Form:
-    pass
-
 class PlaceHolders:
     def __init__(self, lista):
         anos, modalidades, estados = lista
