@@ -11,7 +11,7 @@
                 <h1>Matriculas por faculdade</h1>
 
                 <label>
-                    <form method="get" class="row g-3 align-items-end justify-content-center" onsubmit="redirecionarPorAnoEstado(); return false;">
+                    <form method="POST" class="row g-3 align-items-end justify-content-center">
                         <div class="col-md-4">
                         <label for="anoSelect" class="form-label"> Ano </label>
                             <select name="ano" id="anoSelect"  class="form-select">
@@ -38,18 +38,6 @@
 
                     </form>
 
-                    <script>
-                        function redirecionarPorAnoEstado() {
-                            const ano = document.getElementById("anoSelect").value;
-                            const estado = document.getElementById("estadoSelect").value;
-                            let url = "/faculdades_por_matricula";
-
-                            url += estado ? `/${estado}` : '/all';
-                            url += ano ? `/${ano}` : '/all';
-
-                            window.location.href = url;
-                        }
-                    </script>
                 </label>
             </div>
 

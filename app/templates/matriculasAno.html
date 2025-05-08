@@ -11,10 +11,10 @@
             <div class="col-6 p-4 rounded bg-white shadow-sm">
                 <h1>Total de Matrículas por Ano</h1>
                 <label class="mt-1">
-                    <form method="get" class="row g-3 align-items-end justify-content-center" onsubmit="redirecionarPorEstadoMod(); return false;">
+                    <form method="POST" class="row g-3 align-items-end justify-content-center">
                         <div class="col-md-4">
-                        <label for="modSelect" class="form-label"> Modalidade </label>
-                            <select name="modalidade" id="modSelect"  class="form-select">
+                            <label for="modSelect" class="form-label">Modalidade</label>
+                            <select name="modalidade" id="modSelect" class="form-select">
                                 <option value="">Todos</option>
                                 {% for item in ph.modalidades %}
                                     <option value="{{ item }}" {% if modalidade == item %}selected{% endif %}>{{ item }}</option>
@@ -23,8 +23,8 @@
                         </div>
 
                         <div class="col-md-7">
-                        <label for="estadoSelect" class="form-label"> Estado </label>
-                            <select name="estado" id="estadoSelect"  class="form-select">
+                            <label for="estadoSelect" class="form-label">Estado</label>
+                            <select name="estado" id="estadoSelect" class="form-select">
                                 <option value="">Todos</option>
                                 {% for item in ph.estados %}
                                     <option value="{{ item }}" {% if estado == item %}selected{% endif %}>{{ item }}</option>
@@ -33,24 +33,9 @@
                         </div>
 
                         <div class="col-md-1">
-                        <button type="submit" class="btn btn-primary  w-200"> Pesquisar</button>
+                            <button type="submit" class="btn btn-primary w-200">Pesquisar</button>
                         </div>
                     </form>
-
-                    <script>
-                        function redirecionarPorEstadoMod() {
-                            const mod = document.getElementById("modSelect").value;
-                            const estado = document.getElementById("estadoSelect").value;
-                            let url = "/matriculas_por_ano";
-
-                            // Se tiver estado, adiciona no final
-                            url += estado ? `/${estado}` : '/all';
-                            url += mod ? `/${mod}` : '/all';
-
-                            window.location.href = url;
-                        }
-                    </script>
-
                 </label>
             </div>
         </div>

@@ -26,7 +26,16 @@
                           <table class="table-sm">
                             <thead>
                               <tr>
-                                <th>Curso</th>
+
+                                    {% if consulta.resultado|length > 0 and 'nome_curso' in consulta.resultado[0] %}
+                                        <th>Curso</th>
+                                    {% endif %}
+                                    {% if consulta.resultado|length > 0 and 'ano' in consulta.resultado[0] %}
+                                        <th>Ano</th>
+                                    {% endif %}
+                                    {% if consulta.resultado|length > 0 and 'faculdade' in consulta.resultado[0] %}
+                                        <th>Faculdade</th>
+                                    {% endif %}
                                 <th>Matriculados</th>
                               </tr>
                             </thead>
