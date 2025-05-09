@@ -11,6 +11,21 @@ Nomes: Douglas B. e Rafael M.
 
 Objetivo: Fazer análises agregadas por curso, ano, estado e modalidade, com armazenamento de consultas recentes.
 
+Estrutura do Projeto:
+
+matriculas_controller.py: Possui todas as rotas web, instancia os objetos de DAO e Repository e redireciona o usuário para as Views
+matricula_dao.py: Armazena a engine para conectar no banco de dados e tem métodos para cada consulta
+matricula_repository.py: Um Repository que tem o seu objeto DAO com os métodos que realizam as consultas
+static: imagem do site e css usado nas tabelas
+templates: View do projeto, contém todos os HTMLs usados na aplicação
+
+O projeto conta com 3 consultas principais:
+Matriculados por ano, podendo filtrar por modalidade e estado;
+Ranking de cursos com mais matrículas, podendo filtrar por ano e estado;
+Ranking de faculdades com mais matrículados, podendo filtrar por ano e estado.
+
+Além de uma aba que permite visualizar todas as consultas feitas com os seus resultados.
+
 ---
 
 ## Execução do projeto:
